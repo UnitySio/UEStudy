@@ -30,4 +30,7 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* ViewCamera;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AWeapon> Weapon;
+
 };

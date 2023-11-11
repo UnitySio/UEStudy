@@ -6,6 +6,9 @@
 AItem::AItem()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	
+	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMesh"));
+	SetRootComponent(ItemMesh);
 
 }
 

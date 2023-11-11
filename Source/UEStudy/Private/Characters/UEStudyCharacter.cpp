@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Items/Weapons/Weapon.h"
 
 AUEStudyCharacter::AUEStudyCharacter()
 {
@@ -30,6 +31,13 @@ AUEStudyCharacter::AUEStudyCharacter()
 void AUEStudyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	AWeapon* Temp = Cast<AWeapon>(Weapon);
+	if (Temp)
+	{
+		FAttachmentTransformRules Rules(EAttachmentRule::SnapToTarget, false);
+		Temp->AttachToComponent(GetMesh(), Rules, FName("hand_socket_R"));
+	}
 	
 }
 
