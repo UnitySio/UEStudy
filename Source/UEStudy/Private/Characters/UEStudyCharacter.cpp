@@ -103,9 +103,9 @@ void AUEStudyCharacter::Attack()
 	if (AnimInstance && AttackMontage)
 	{
 		AnimInstance->Montage_Play(AttackMontage);
-		int32 Selection = FMath::RandRange(0, 4);
-		FString Section = FString::Printf(TEXT("Attack %d"), Selection);
-		AnimInstance->Montage_JumpToSection(FName(*Section), AttackMontage);
+		// int32 Selection = FMath::RandRange(0, 4);
+		// FString Section = FString::Printf(TEXT("Attack %d"), Selection);
+		// AnimInstance->Montage_JumpToSection(FName(*Section), AttackMontage);
 	}
 }
 
