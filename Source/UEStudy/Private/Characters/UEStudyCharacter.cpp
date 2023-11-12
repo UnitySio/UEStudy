@@ -20,7 +20,7 @@ AUEStudyCharacter::AUEStudyCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 540.f, 0.f); // 회전속도 설정
 
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(FName("CameraBoom"));
-	CameraBoom->SetupAttachment(RootComponent); // Spring Arm을 RootComponent의 자식으로 설정
+	CameraBoom->SetupAttachment(GetRootComponent()); // Spring Arm을 RootComponent의 자식으로 설정
 	CameraBoom->TargetArmLength = 500.f; // Spring Arm의 길이 설정
 
 	ViewCamera = CreateDefaultSubobject<UCameraComponent>(FName("ViewCamera"));
