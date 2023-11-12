@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "UEStudyCharacter.generated.h"
 
+class AItem;
+
 UCLASS()
 class UESTUDY_API AUEStudyCharacter : public ACharacter
 {
@@ -15,6 +17,7 @@ public:
 	AUEStudyCharacter();
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	FORCEINLINE void SetOverlappingItem(AItem* item) { OverlappingItem = item; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -22,6 +25,7 @@ protected:
 	void MoveRight(float Value);
 	void Turn(float Value);
 	void LookUp(float Value);
+	void EKeyPressed();
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -30,7 +34,7 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* ViewCamera;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AWeapon> Weapon;
+	UPROPERTY(VisibleInstanceOnly)
+	AItem* OverlappingItem;
 
 };

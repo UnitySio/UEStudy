@@ -31,13 +31,6 @@ AUEStudyCharacter::AUEStudyCharacter()
 void AUEStudyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	AWeapon* Temp = Cast<AWeapon>(Weapon);
-	if (Temp)
-	{
-		FAttachmentTransformRules Rules(EAttachmentRule::SnapToTarget, false);
-		Temp->AttachToComponent(GetMesh(), Rules, FName("hand_socket_R"));
-	}
 	
 }
 
@@ -75,6 +68,18 @@ void AUEStudyCharacter::LookUp(float Value)
 	AddControllerPitchInput(Value);
 }
 
+void AUEStudyCharacter::EKeyPressed()
+{
+	if (OverlappingItem)
+	{
+		AWeapon* Weapon = Cast<AWeapon>(OverlappingItem);
+		if (Weapon)
+		{
+			Weapon->Equip(GetMesh(), FName("hand_socket_R"));
+		}
+	}
+}
+
 void AUEStudyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -91,6 +96,7 @@ void AUEStudyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis(FName("LookUp"), this, &AUEStudyCharacter::LookUp);
 
 	PlayerInputComponent->BindAction(FName("Jump"), IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction(FName("Equip"), IE_Pressed, this, &AUEStudyCharacter::EKeyPressed);
 
 }
 
