@@ -27,6 +27,7 @@ protected:
 	void Turn(float Value);
 	void LookUp(float Value);
 	void EKeyPressed();
+	void Attack();
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -43,5 +44,8 @@ private:
 	
 	UPROPERTY()
 	AWeapon* SpawnedWeapon;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Montages")
+	UAnimMontage* AttackMontage;
 
 };

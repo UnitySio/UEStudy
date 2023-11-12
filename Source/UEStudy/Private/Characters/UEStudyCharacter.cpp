@@ -88,6 +88,18 @@ void AUEStudyCharacter::EKeyPressed()
 	}
 }
 
+void AUEStudyCharacter::Attack()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance && AttackMontage)
+	{
+		AnimInstance->Montage_Play(AttackMontage);
+		int32 Selection = FMath::RandRange(0, 4);
+		FString Section = FString::Printf(TEXT("Attack %d"), Selection);
+		AnimInstance->Montage_JumpToSection(FName(*Section), AttackMontage);
+	}
+}
+
 void AUEStudyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -105,6 +117,7 @@ void AUEStudyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	PlayerInputComponent->BindAction(FName("Jump"), IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction(FName("Equip"), IE_Pressed, this, &AUEStudyCharacter::EKeyPressed);
+	PlayerInputComponent->BindAction(FName("Attack"), IE_Pressed, this, &AUEStudyCharacter::Attack);
 
 }
 
