@@ -7,6 +7,7 @@
 #include "UEStudyCharacter.generated.h"
 
 class AItem;
+class AWeapon;
 
 UCLASS()
 class UESTUDY_API AUEStudyCharacter : public ACharacter
@@ -36,5 +37,11 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly)
 	AItem* OverlappingItem;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AWeapon> WeaponActor;
+	
+	UPROPERTY()
+	AWeapon* SpawnedWeapon;
 
 };

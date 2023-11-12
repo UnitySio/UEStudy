@@ -31,6 +31,14 @@ AUEStudyCharacter::AUEStudyCharacter()
 void AUEStudyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// 무기 장착
+	SpawnedWeapon = GetWorld()->SpawnActor<AWeapon>(WeaponActor);
+	if (SpawnedWeapon)
+	{
+		FAttachmentTransformRules TransformRules(EAttachmentRule::SnapToTarget, true);
+		SpawnedWeapon->AttachToComponent(GetMesh(), TransformRules, FName("hand_socket_R"));
+	}
 	
 }
 
