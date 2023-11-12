@@ -26,6 +26,7 @@ protected:
 	void MoveRight(float Value);
 	void Turn(float Value);
 	void LookUp(float Value);
+	void Zoom(float Value);
 	void EKeyPressed();
 	void Attack();
 

@@ -76,6 +76,15 @@ void AUEStudyCharacter::LookUp(float Value)
 	AddControllerPitchInput(Value);
 }
 
+void AUEStudyCharacter::Zoom(float Value)
+{
+	if (Value != 0.f)
+	{
+		CameraBoom->TargetArmLength += Value * 20.f;
+		CameraBoom->TargetArmLength = FMath::Clamp(CameraBoom->TargetArmLength, 300.f, 500.f);
+	}
+}
+
 void AUEStudyCharacter::EKeyPressed()
 {
 	if (OverlappingItem)
@@ -114,6 +123,7 @@ void AUEStudyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis(FName("MoveRight"), this, &AUEStudyCharacter::MoveRight);
 	PlayerInputComponent->BindAxis(FName("Turn"), this, &AUEStudyCharacter::Turn);
 	PlayerInputComponent->BindAxis(FName("LookUp"), this, &AUEStudyCharacter::LookUp);
+	PlayerInputComponent->BindAxis(FName("Zoom"), this, &AUEStudyCharacter::Zoom);
 
 	PlayerInputComponent->BindAction(FName("Jump"), IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction(FName("Equip"), IE_Pressed, this, &AUEStudyCharacter::EKeyPressed);
