@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CharacterTypes.h"
 #include "GameFramework/Character.h"
 #include "UEStudyCharacter.generated.h"
 
@@ -30,7 +31,12 @@ protected:
 	void EKeyPressed();
 	void Attack();
 
+	UFUNCTION(BlueprintCallable)
+	void AttackEnd();
+
 private:
+	EActionState ActionState = EActionState::EAS_Unoccupied;
+	
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* CameraBoom;
 

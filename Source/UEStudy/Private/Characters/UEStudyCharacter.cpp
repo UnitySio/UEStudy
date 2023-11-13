@@ -99,14 +99,19 @@ void AUEStudyCharacter::EKeyPressed()
 
 void AUEStudyCharacter::Attack()
 {
+	if (ActionState != EActionState::EAS_Unoccupied) return;
+	
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if (AnimInstance && AttackMontage)
 	{
 		AnimInstance->Montage_Play(AttackMontage);
-		// int32 Selection = FMath::RandRange(0, 4);
-		// FString Section = FString::Printf(TEXT("Attack %d"), Selection);
-		// AnimInstance->Montage_JumpToSection(FName(*Section), AttackMontage);
+		ActionState = EActionState::EAS_Attacking;
 	}
+}
+
+void AUEStudyCharacter::AttackEnd()
+{
+	ActionState = EActionState::EAS_Unoccupied;
 }
 
 void AUEStudyCharacter::Tick(float DeltaTime)
