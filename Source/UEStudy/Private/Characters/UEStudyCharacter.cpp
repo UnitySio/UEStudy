@@ -44,6 +44,7 @@ void AUEStudyCharacter::BeginPlay()
 
 void AUEStudyCharacter::MoveForward(float Value)
 {
+	if (ActionState == EActionState::EAS_Attacking) return;
 	if (Controller && Value != 0.f)
 	{
 		const FRotator ControlRotation = GetControlRotation(); // 컨트롤러의 회전값을 가져옴
@@ -56,6 +57,7 @@ void AUEStudyCharacter::MoveForward(float Value)
 
 void AUEStudyCharacter::MoveRight(float Value)
 {
+	if (ActionState == EActionState::EAS_Attacking) return;
 	if (Controller && Value != 0.f)
 	{
 		const FRotator ControlRotation = GetControlRotation(); // 컨트롤러의 회전값을 가져옴
