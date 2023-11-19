@@ -35,3 +35,14 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void AEnemy::GetHit(const FVector& ImpactPoint)
+{
+	DrawDebugSphere(GetWorld(), ImpactPoint, 25.f, 12, FColor::Red, true);
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance && HitReactMontage)
+	{
+		AnimInstance->Montage_Play(HitReactMontage);
+	}
+}
+
