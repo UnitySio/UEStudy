@@ -6,6 +6,7 @@
 #include "Items/Item.h"
 #include "Weapon.generated.h"
 
+class UBoxComponent;
 /**
  * 
  */
@@ -17,17 +18,20 @@ class UESTUDY_API AWeapon : public AItem
 public:
 	AWeapon();
 	void Equip(USceneComponent* Parent, FName SocketName);
+	FORCEINLINE UBoxComponent* GetWeaponBox() const { return WeaponBox; }
 	
 protected:
 	virtual void BeginPlay() override;
 	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 	virtual void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
+
+	UFUNCTION()
 	void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 					  int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")
-	class UBoxComponent* WeaponBox;
+	UBoxComponent* WeaponBox;
 
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* BoxTraceStart;

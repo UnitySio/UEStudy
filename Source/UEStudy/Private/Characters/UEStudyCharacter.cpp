@@ -4,6 +4,7 @@
 #include "UEStudy/Public/Characters/UEStudyCharacter.h"
 
 #include "Camera/CameraComponent.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Items/Weapons/Weapon.h"
@@ -26,6 +27,14 @@ AUEStudyCharacter::AUEStudyCharacter()
 	ViewCamera = CreateDefaultSubobject<UCameraComponent>(FName("ViewCamera"));
 	ViewCamera->SetupAttachment(CameraBoom); // Camera를 Spring Arm의 자식으로 설정
 
+}
+
+void AUEStudyCharacter::SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnabled)
+{
+	if (SpawnedWeapon && SpawnedWeapon->GetWeaponBox())
+	{
+		SpawnedWeapon->GetWeaponBox()->SetCollisionEnabled(CollisionEnabled);
+	}
 }
 
 void AUEStudyCharacter::BeginPlay()
