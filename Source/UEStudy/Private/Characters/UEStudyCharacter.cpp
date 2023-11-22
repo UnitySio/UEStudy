@@ -34,6 +34,7 @@ void AUEStudyCharacter::SetWeaponCollisionEnabled(ECollisionEnabled::Type Collis
 	if (SpawnedWeapon && SpawnedWeapon->GetWeaponBox())
 	{
 		SpawnedWeapon->GetWeaponBox()->SetCollisionEnabled(CollisionEnabled);
+		SpawnedWeapon->IgnoreActors.Empty();
 	}
 }
 
