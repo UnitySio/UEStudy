@@ -3,7 +3,9 @@
 
 #include "Enemy/Enemy.h"
 
+#include "Components/AttributeComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "HUD/HpBarComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 AEnemy::AEnemy()
@@ -16,11 +18,21 @@ AEnemy::AEnemy()
 	GetMesh()->SetGenerateOverlapEvents(true);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 
+	Attributes = CreateDefaultSubobject<UAttributeComponent>(TEXT("Attributes"));
+
+	HpBarWidget = CreateDefaultSubobject<UHpBarComponent>(TEXT("HpBar"));
+	HpBarWidget->SetupAttachment(GetRootComponent());
+
 }
 
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (HpBarWidget)
+	{
+		HpBarWidget->SetHpPercent(1.f);
+	}
 	
 }
 
@@ -93,5 +105,17 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 			ImpactPoint
 		);
 	}
+}
+
+float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	if (Attributes && HpBarWidget)
+	{
+		Attributes->ReceiveDamage(DamageAmount);
+		HpBarWidget->SetHpPercent(Attributes->GetHpPercent());
+	}
+	
+	return DamageAmount;
 }
 

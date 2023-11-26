@@ -5,6 +5,7 @@
 
 #include "Components/BoxComponent.h"
 #include "Interfaces/HitInterface.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 AWeapon::AWeapon()
@@ -90,5 +91,13 @@ void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		}
 
 		IgnoreActors.AddUnique(BoxHit.GetActor());
+
+		UGameplayStatics::ApplyDamage(
+			BoxHit.GetActor(),
+			20.f,
+			GetInstigator()->GetController(),
+			this,
+			UDamageType::StaticClass()
+		);
 	}
 }

@@ -48,6 +48,8 @@ void AUEStudyCharacter::BeginPlay()
 	{
 		FAttachmentTransformRules TransformRules(EAttachmentRule::SnapToTarget, true);
 		SpawnedWeapon->AttachToComponent(GetMesh(), TransformRules, FName("hand_socket_R"));
+		SpawnedWeapon->SetOwner(this);
+		SpawnedWeapon->SetInstigator(this);
 	}
 	
 }
