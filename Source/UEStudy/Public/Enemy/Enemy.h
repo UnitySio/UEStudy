@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Characters/CharacterTypes.h"
 #include "GameFramework/Character.h"
 #include "Interfaces/HitInterface.h"
 #include "Enemy.generated.h"
@@ -41,5 +42,8 @@ private:
 protected:
 	virtual void BeginPlay() override;
 	void Die();
+
+	UPROPERTY(BlueprintReadOnly)
+	EDeathPose DeathPose = EDeathPose::EDP_Alive;
 
 };
