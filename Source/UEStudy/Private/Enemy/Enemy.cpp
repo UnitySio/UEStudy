@@ -36,6 +36,43 @@ void AEnemy::BeginPlay()
 	
 }
 
+void AEnemy::Die()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance && DeathMontage)
+	{
+		AnimInstance->Montage_Play(DeathMontage);
+
+		const int32 Selection = FMath::RandRange(0, 5);
+		FName SectionName = FName();
+		switch (Selection)
+		{
+		case 0:
+			SectionName = FName("Death1");
+			break;
+		case 1:
+			SectionName = FName("Death2");
+			break;
+		case 2:
+			SectionName = FName("Death3");
+			break;
+		case 3:
+			SectionName = FName("Death4");
+			break;
+		case 4:
+			SectionName = FName("Death5");
+			break;
+		case 5:
+			SectionName = FName("Death6");
+			break;
+		default:
+			break;
+		}
+
+		AnimInstance->Montage_JumpToSection(SectionName, DeathMontage);
+	}
+}
+
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -52,40 +89,47 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 {
 	// DrawDebugSphere(GetWorld(), ImpactPoint, 25.f, 12, FColor::Red, true);
 
-	const FVector Forward = GetActorForwardVector();
-	const FVector ImpactLowered(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
-	const FVector ToHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
-
-	const double CosTheta = FVector::DotProduct(Forward, ToHit);
-	double Theta = FMath::Acos(CosTheta);
-	Theta = FMath::RadiansToDegrees(Theta);
-
-	const FVector CrossProduct = FVector::CrossProduct(Forward, ToHit);
-	if (CrossProduct.Z < 0.f)
+	if (Attributes && Attributes->IsAlive())
 	{
-		Theta *= -1.f;
-	}
+		const FVector Forward = GetActorForwardVector();
+		const FVector ImpactLowered(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
+		const FVector ToHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
 
-	FName Section("FromBack");
+		const double CosTheta = FVector::DotProduct(Forward, ToHit);
+		double Theta = FMath::Acos(CosTheta);
+		Theta = FMath::RadiansToDegrees(Theta);
 
-	if (Theta >= -45.f && Theta < 45.f)
-	{
-		Section = FName("FromFront");
-	}
-	else if (Theta >= 45.f && Theta < 135.f)
-	{
-		Section = FName("FromRight");
-	}
-	else if (Theta >= -135.f && Theta < -45.f)
-	{
-		Section = FName("FromLeft");
-	}
+		const FVector CrossProduct = FVector::CrossProduct(Forward, ToHit);
+		if (CrossProduct.Z < 0.f)
+		{
+			Theta *= -1.f;
+		}
+
+		FName Section("FromBack");
+
+		if (Theta >= -45.f && Theta < 45.f)
+		{
+			Section = FName("FromFront");
+		}
+		else if (Theta >= 45.f && Theta < 135.f)
+		{
+			Section = FName("FromRight");
+		}
+		else if (Theta >= -135.f && Theta < -45.f)
+		{
+			Section = FName("FromLeft");
+		}
 	
-	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if (AnimInstance && HitReactMontage)
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		if (AnimInstance && HitReactMontage)
+		{
+			AnimInstance->Montage_Play(HitReactMontage);
+			AnimInstance->Montage_JumpToSection(Section, HitReactMontage);
+		}
+	}
+	else
 	{
-		AnimInstance->Montage_Play(HitReactMontage);
-		AnimInstance->Montage_JumpToSection(Section, HitReactMontage);
+		Die();
 	}
 
 	if (HitSound)

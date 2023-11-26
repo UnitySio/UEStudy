@@ -84,14 +84,6 @@ void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 
 	if (BoxHit.GetActor())
 	{
-		IHitInterface* HitInterface = Cast<IHitInterface>(BoxHit.GetActor());
-		if (HitInterface)
-		{
-			HitInterface->GetHit(BoxHit.ImpactPoint);
-		}
-
-		IgnoreActors.AddUnique(BoxHit.GetActor());
-
 		UGameplayStatics::ApplyDamage(
 			BoxHit.GetActor(),
 			20.f,
@@ -99,5 +91,13 @@ void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 			this,
 			UDamageType::StaticClass()
 		);
+		
+		IHitInterface* HitInterface = Cast<IHitInterface>(BoxHit.GetActor());
+		if (HitInterface)
+		{
+			HitInterface->GetHit(BoxHit.ImpactPoint);
+		}
+
+		IgnoreActors.AddUnique(BoxHit.GetActor());
 	}
 }

@@ -32,3 +32,8 @@ float UAttributeComponent::GetHpPercent()
 	return Hp / MaxHp;
 }
 
+bool UAttributeComponent::IsAlive()
+{
+	return Hp > 0.f;
+}
+
