@@ -144,7 +144,7 @@ void AUEStudyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis(FName("LookUp"), this, &AUEStudyCharacter::LookUp);
 	PlayerInputComponent->BindAxis(FName("Zoom"), this, &AUEStudyCharacter::Zoom);
 
-	PlayerInputComponent->BindAction(FName("Jump"), IE_Pressed, this, &ACharacter::Jump);
+	// PlayerInputComponent->BindAction(FName("Jump"), IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction(FName("Equip"), IE_Pressed, this, &AUEStudyCharacter::EKeyPressed);
 	PlayerInputComponent->BindAction(FName("Attack"), IE_Pressed, this, &AUEStudyCharacter::Attack);
 
