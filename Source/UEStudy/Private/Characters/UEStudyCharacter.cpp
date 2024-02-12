@@ -146,7 +146,7 @@ void AUEStudyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	// PlayerInputComponent->BindAction(FName("Jump"), IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction(FName("Equip"), IE_Pressed, this, &AUEStudyCharacter::EKeyPressed);
-	PlayerInputComponent->BindAction(FName("Attack"), IE_Pressed, this, &AUEStudyCharacter::Attack);
+	// PlayerInputComponent->BindAction(FName("Attack"), IE_Pressed, this, &AUEStudyCharacter::Attack);
 
 }
 

@@ -24,6 +24,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnabled);
 
+	FORCEINLINE EActionState GetActionState() const { return ActionState; }
+	FORCEINLINE void SetActionState(EActionState State) { ActionState = State; }
+
+	FORCEINLINE UAnimMontage* GetAttackMontage() const { return AttackMontage; }
+
 protected:
 	virtual void BeginPlay() override;
 	void MoveForward(float Value);

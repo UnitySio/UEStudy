@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AbilitySystem/Player/ABGASPlayerState.h"
+#include "AbilitySystem/Character/ABGASPlayerState.h"
 
 #include "AbilitySystemComponent.h"
 

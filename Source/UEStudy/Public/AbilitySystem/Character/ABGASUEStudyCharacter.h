@@ -31,15 +31,21 @@ protected:
 	void GASInputReleased(int32 InputId);
 
 	UPROPERTY(EditAnywhere, Category = Input)
-	class UInputMappingContext* DefaultMappingContext;
+	class UInputMappingContext* InputMappingContext;
 
 	UPROPERTY(EditAnywhere, Category = Input)
 	class UInputAction* JumpAction;
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* AttackAction;
 	
 	UPROPERTY(EditAnywhere, Category = GAS)
 	TObjectPtr<class UAbilitySystemComponent> ASC;
 
 	UPROPERTY(EditAnywhere, Category = GAS)
 	TArray<TSubclassOf<class UGameplayAbility>> StartAbilities;
+
+	UPROPERTY(EditAnywhere, Category = GAS)
+	TMap<int32, TSubclassOf<class UGameplayAbility>> StartInputAbilities;
 	
 };

@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AbilitySystem/Player/ABGASUEStudyCharacter.h"
+#include "AbilitySystem/Character/ABGASUEStudyCharacter.h"
 
 #include "AbilitySystemComponent.h"
-#include "AbilitySystem/Player/ABGASPlayerState.h"
+#include "AbilitySystem/Character/ABGASPlayerState.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
@@ -28,7 +28,7 @@ void AABGASUEStudyCharacter::BeginPlay()
 		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
 		if (Subsystem)
 		{
-			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+			Subsystem->AddMappingContext(InputMappingContext, 0);
 		}
 	}
 }
@@ -50,9 +50,17 @@ void AABGASUEStudyCharacter::PossessedBy(AController* NewController)
 			FGameplayAbilitySpec StartSpec(StartAbility);
 			StartSpec.InputID = InputId++;
 			ASC->GiveAbility(StartSpec);
-
-			SetupGASInputComponent();
 		}
+
+		for (const auto& StartInputAbility : StartInputAbilities)
+		{
+			// 어빌리티 정보
+			FGameplayAbilitySpec StartSpec(StartInputAbility.Value);
+			StartSpec.InputID = StartInputAbility.Key;
+			ASC->GiveAbility(StartSpec);
+		}
+		
+		SetupGASInputComponent();
 	}
 }
 
@@ -71,6 +79,8 @@ void AABGASUEStudyCharacter::SetupGASInputComponent()
 
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AABGASUEStudyCharacter::GASInputPressed, 0);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &AABGASUEStudyCharacter::GASInputReleased, 0);
+
+		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AABGASUEStudyCharacter::GASInputPressed, 1);
 	}
 }
 
