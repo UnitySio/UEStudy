@@ -33,7 +33,7 @@ void UABGA_Attack::InputPressed(const FGameplayAbilitySpecHandle Handle, const F
 {
 	Super::InputPressed(Handle, ActorInfo, ActivationInfo);
 
-	UE_LOG(LogTemp, Warning, TEXT("InputPressed"));
+	// UE_LOG(LogTemp, Warning, TEXT("InputPressed"));
 }
 
 void UABGA_Attack::CancelAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
